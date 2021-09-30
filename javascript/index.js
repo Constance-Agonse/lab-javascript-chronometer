@@ -14,6 +14,7 @@ const secUniElement = document.getElementById('secUni');
 const milDecElement = document.getElementById('milDec');
 const milUniElement = document.getElementById('milUni');
 const splitsElement = document.getElementById('splits');
+let StartIntervalId;
 
 function printTime() {
   printMinutes();
@@ -46,16 +47,15 @@ function printSplit() {
 }
 
 function clearSplits() {
-  // ... your code goes here
-li.innerHTML = " ";
-
+  splitsElement.innerHTML = " ";
 }
 
 function setStopBtn() {
   btnLeftElement.innerHTML = "START"
   btnLeftElement.setAttribute('class', 'btn start');
   btnRightElement.innerHTML = "RESET";
-  btnRightElement.setAttribute('class', 'btn reset')
+  btnRightElement.setAttribute('class', 'btn reset');
+  chronometer.stop();
 }
 
 //il change seulement la couleur et l'intérieur du 
@@ -83,12 +83,16 @@ chronometer.reset();
 
 // Start/Stop Button
 btnLeftElement.addEventListener('click', () => {
-  // printTime()
+ 
   //on veut vérifier si l'élement a cette classe
   if (btnLeftElement.classList.contains('start')) {
     setStartBtn();
+    StartIntervalId = setInterval(() => {
+      printTime()
+    } , 1000 );
   }
    else {
+    printTime();
   setStopBtn(); 
 };
 });
@@ -97,8 +101,10 @@ btnLeftElement.addEventListener('click', () => {
 btnRightElement.addEventListener('click', () => {
   if (btnRightElement.classList.contains('reset')) {
     setResetBtn();
+    clearSplits();
   }
    else {
-// ???
+    setSplitBtn();
+    
 };
 });

@@ -6,7 +6,7 @@ class Chronometer {
   }
 
   start(callback) {
-    if (callback) {
+    if (callback && typeof callback === 'function') {
       callback();
     };
     this.intervalId = setInterval(() => {
@@ -15,12 +15,12 @@ class Chronometer {
   }
 
   getMinutes() {
-    if (this.currentTime === 0) { return 0 }
-    return Math.floor(this.currentTime / 60);
+    if (this.currentTime === 0) { return "00" }
+    return this.computeTwoDigitNumber(Math.floor(this.currentTime / 60));
   }
 
   getSeconds() {
-    return this.currentTime % 60;
+    return this.computeTwoDigitNumber(this.currentTime % 60);
   }
 
   computeTwoDigitNumber(value) {
